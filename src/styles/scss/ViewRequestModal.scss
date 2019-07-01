@@ -1,0 +1,30 @@
+.modal-body {
+    max-height: calc(100vh - 200px);
+    overflow-y: auto;
+}
+
+.table-fit {
+    height: 1rem;
+}
+
+.table-fixed thead th {
+    position: sticky;
+    position: -webkit-sticky;
+    top: 0;
+    z-index: 999;
+    background-color: #000;
+    color: #fff;
+}
+
+
+.table-fit {
+    height: 1rem;
+}
+
+.trash-effects {
+    color: red;
+}
+
+.inputFormAddItem {
+   background-color: #ccf5ff 
+}

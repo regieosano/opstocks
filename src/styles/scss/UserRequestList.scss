@@ -1,0 +1,36 @@
+.risNoColor {
+    color: #FFA500;
+    font-size:15px;
+}
+
+.trash-effects {
+    color: red;
+}
+
+.trash-effects:hover {
+    cursor: pointer;
+}
+
+.valueSpace {
+    padding-left: 1rem;
+}
+
+.table-wrap {
+    height: 20rem;
+    overflow-y: auto;
+}
+
+
+.table-fixed thead th {
+    position: sticky;
+    position: -webkit-sticky;
+    top: 0;
+    z-index: 999;
+    background-color: #000;
+    color: #fff;
+}
+
+
+.table-fit {
+    height: 1rem;
+}
