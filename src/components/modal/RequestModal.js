@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { getRISNoYearAndMonth } from '../../utility/risNo';
+import '../../styles/scss/RequestModal.scss';
 
 class RequestModal extends Component {
 
@@ -8,6 +8,7 @@ class RequestModal extends Component {
     }
 
     render() {
+        
         return (
                <div className="modal fade"
                     tabIndex="-1"
@@ -20,8 +21,19 @@ class RequestModal extends Component {
                >
                     <div className="modal-dialog modal-xl">
                        <div className="modal-content">
-                          <div className="modal-header">
-                             <h5 className="modal-title">{this.props.title}</h5>
+                          <div className="modal-header">               
+                             <p className="modal-title titleFormat">
+                               {this.props.title + " "}
+                               {
+                                   this.props.isDisplayDate ?
+                                     <span className="datedFormat">
+                                      {"Dated " + this.props.dateOfRequest}
+                                     </span>
+                                     : <span></span>
+                               }
+                              
+                             </p>                              
+                           
                           </div>
                           <div className="modal-body">
                                {this.props.contentBody} 

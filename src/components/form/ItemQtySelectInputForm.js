@@ -32,7 +32,10 @@ class ItemQtySelectInputForm extends Component {
         if (e.target.id ===  'qtyRequested') {
            const qtyRequested = e.target.value; 
            if (/^[1-9][0-9]*$/.test(qtyRequested)) {
-              this.props.handleItemRequestedObjectCreation(this.itemRequestedObject, true, qtyRequested)
+              const qtyRequestedToInt = parseInt(qtyRequested, 10);
+              this.props.handleItemRequestedObjectCreation(this.itemRequestedObject, true, qtyRequestedToInt)
+           } else {
+            this.props.handleItemRequestedObjectCreation(this.itemRequestedObject, false)    
            }
         }
     }

@@ -20,6 +20,7 @@ class UserDashBoard extends Component {
           officeName: 'The Office Now',
           lastRISNo: '',
           requestNo: '',
+          dateOfRequest: '',
           isRequestSubmittedAlready: false,
           xauthtoken: '',
           officeRequests: [],
@@ -36,6 +37,8 @@ class UserDashBoard extends Component {
 
     handleRISNoSelected = (request) => {
         const requestNo = request.requestNo;
+        const currentDate = new Date(request.dateOfRequest);
+        const dateOfRequest = currentDate.toLocaleDateString("en-US");
         const isRequestSubmittedAlready = request.isRequestSubmittedAlready;
 
         let config = {
@@ -54,6 +57,7 @@ class UserDashBoard extends Component {
 
         this.setState({
           requestNo,
+          dateOfRequest,
           isRequestSubmittedAlready 
         })
     }
@@ -87,6 +91,7 @@ class UserDashBoard extends Component {
        
         const { officeName,
                 requestNo,
+                dateOfRequest,
                 isRequestSubmittedAlready,
                 requestedItems,
                 xauthtoken,
@@ -101,6 +106,7 @@ class UserDashBoard extends Component {
                                className="btn btn-link"
                                onClick={this.handleRISNoSelected.bind(this, {
                                   requestNo: request.requestNo,
+                                  dateOfRequest: request.date,
                                   isRequestSubmittedAlready: request.isRequestSubmittedAlready
                                })}
                                data-toggle="modal" 
@@ -141,15 +147,16 @@ class UserDashBoard extends Component {
 
               <ViewRequestModal 
                   requestNo={requestNo}
+                  dateOfRequest={dateOfRequest}
                   xauthtoken={xauthtoken}
                   requestedItems={requestedItems}
-                  isRequestSubmittedAlready={isRequestSubmittedAlready} 
+                  isRequestSubmittedAlready={isRequestSubmittedAlready}
               />
                 
               <NewRequestModal 
-                 officeName={officeName}
-                 xauthtoken={xauthtoken}
-                 baseRISNo={lastRISNo}
+                  officeName={officeName}
+                  xauthtoken={xauthtoken}
+                  baseRISNo={lastRISNo}
               />
 
               <div className="container mt-5">
@@ -177,7 +184,7 @@ class UserDashBoard extends Component {
                   </table>
                 </div>
                
-                <div className="createNewRequest mt-3">
+                <div className="createNewRequest">
                    <button type="button" 
                          className="btn btn-primary"
                          data-toggle="modal" 

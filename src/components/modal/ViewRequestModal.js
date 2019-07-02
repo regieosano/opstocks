@@ -42,13 +42,19 @@ class ViewRequestModal extends Component {
     })
   }
 
-  handleItemRequestedObjectCreation = (itemRequestedObject, validEntries=false, qtyRequestedForUpdate) => {
+  handleItemRequestedObjectCreation = (itemRequestedObject, validEntries, qtyRequestedForUpdate=0) => {
     if (validEntries) {
       this.setState(
         {
           itemRequestedObject,
           validEntries,
           qtyRequestedForUpdate
+        }
+      )
+    } else {
+      this.setState(
+        {
+          validEntries,
         }
       )
     }
@@ -77,8 +83,23 @@ class ViewRequestModal extends Component {
                validEntries: false 
          })
     }
-
     
+  }
+
+  handleDeleteItemEventAction = (item) => { 
+    if (confirm("Are you sure you want to DELETE this ITEM? " + "\n\n" +
+          item.item['itemName']
+       ))
+       {
+          this.props.requestedItems.splice(item.index, 1);
+          this.setState({
+            hasForUpdate: true,
+          })    
+       } 
+       else
+       {
+
+       } 
   }
   
   handleUpdatedItem = (updatedQtyValue) => {
@@ -96,7 +117,7 @@ class ViewRequestModal extends Component {
     this.props.updateRequest(this.props.requestedItems, this.props.requestNo, this.props.xauthtoken);
 
     this.setState({ hasForUpdate: false })
-    alert('Quantity CHANGED was UPDATED and RECORDED.')
+    alert('Item / Quantity CHANGED or DELETION was UPDATED and RECORDED.')
   }
 
   handleCloseOfItemAddUpdate = () => {
@@ -145,7 +166,7 @@ class ViewRequestModal extends Component {
                <th scope="col">Items</th>
                <th scope="col">Qty</th>
                <th scope="col"><i className="fa fa-th"></i></th> 
-               <th scope="col">x</th>   
+               <th scope="col"><i className="fas fa-thumbs-up"></i></th>   
              </tr>
           </thead>
           <tbody>
@@ -190,11 +211,20 @@ class ViewRequestModal extends Component {
                      (
                        <td className="align-middle">
                         <span className="trash-effects">
-                          <i className="fa fa-trash"></i>
+                          <i className="fa fa-trash"
+                             onClick={this.handleDeleteItemEventAction.bind(this,
+                               {
+                                   index,
+                                   item: item.item,    
+                               }
+                              )
+                            }
+                          >
+                          </i>
                         </span>
                        </td>
                      ) : (
-                       <td></td>
+                       <td className="align-middle">{item['qtyApproved']}</td>
                      )
                 }
               </tr>
@@ -208,7 +238,7 @@ class ViewRequestModal extends Component {
       const buttonsForNotSubmitted = 
          <div>
             <button type="button"
-                    className="btn btn-primary ml-2"
+                    className="btn btn-primary ml-2 btn-lg"
                     disabled={!validEntries}
                     data-target="#addNewItemInSavedRequestModal"
                     data-toggle="modal"
@@ -249,8 +279,7 @@ class ViewRequestModal extends Component {
         { this.props.isRequestSubmittedAlready ? buttonCloseOnly:
           buttonsForNotSubmitted 
         }
-      </div>
-      
+      </div>    
     
     return (
       <div>
@@ -258,7 +287,9 @@ class ViewRequestModal extends Component {
               contentBody={contentBody}
               contentFooter={contentFooter}
               title={'RIS No. ' + this.props.requestNo}
-              modalIdName={'yRequestModal'}   
+              dateOfRequest={this.props.dateOfRequest}
+              modalIdName={'yRequestModal'}
+              isDisplayDate={true}   
            />   
            <QtyItemChangedSavedModal
               handleUpdatedItem={this.handleUpdatedItem}
@@ -266,8 +297,7 @@ class ViewRequestModal extends Component {
               itemName={itemNameForUpdate}
               qtyRequestedForUpdate={qtyRequestedForUpdate} 
            
-           />
-      
+           />   
       </div>
         
     )
@@ -277,6 +307,7 @@ class ViewRequestModal extends Component {
 ViewRequestModal.propTypes = {
   updateRequest: PropTypes.func.isRequired,
   requestNo: PropTypes.string.isRequired,
+  dateOfRequest: PropTypes.string.isRequired, 
   xauthtoken: PropTypes.string.isRequired,
   requestedItems: PropTypes.array.isRequired,
   isRequestSubmittedAlready: PropTypes.bool.isRequired

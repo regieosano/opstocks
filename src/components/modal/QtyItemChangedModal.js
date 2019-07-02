@@ -91,7 +91,7 @@ QtyItemChangedModal.propTypes = {
     handleSelectedItemQtyForUpdate: PropTypes.func,
     indexNo: PropTypes.number.isRequired,
     itemName: PropTypes.string.isRequired,
-    qtyRequestedForUpdate: PropTypes.string.isRequired
+    qtyRequestedForUpdate: PropTypes.number.isRequired
 }
 
 export default QtyItemChangedModal;

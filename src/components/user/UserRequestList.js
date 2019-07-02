@@ -23,8 +23,6 @@ class UserRequestList extends Component {
          {
 
          } 
-
-      
     }
 
     handleSelectItemEventAction = 

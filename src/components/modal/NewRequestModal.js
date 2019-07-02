@@ -18,9 +18,6 @@ import '../../styles/scss/NewRequestModal.scss'
 
 class NewRequestModal extends Component {
 
-  validItemName = false;
-  validQtyRequested = false;
-
   constructor(props) {
     super(props);
     this.itemQtySelectInputFormComp = React.createRef();
@@ -30,7 +27,7 @@ class NewRequestModal extends Component {
        title: 'New Request',
        itemRequestedObject: {},
        itemNameForUpdate: '',
-       qtyRequestedForUpdate: '',
+       qtyRequestedForUpdate: 0,
        hasBaseRISNoAlready: false,
        itemsForRequest: [],
        itemsSelectedInTheRequest: [],
@@ -69,13 +66,19 @@ class NewRequestModal extends Component {
      })
   }
 
-  handleItemRequestedObjectCreation = (itemRequestedObject, validEntries=false, qtyRequestedForUpdate) => {
+  handleItemRequestedObjectCreation = (itemRequestedObject, validEntries, qtyRequestedForUpdate=0) => {
     if (validEntries) {
       this.setState(
         {
           itemRequestedObject,
           validEntries,
           qtyRequestedForUpdate
+        }
+      )
+    } else {
+      this.setState(
+        {
+          validEntries,
         }
       )
     }
@@ -107,9 +110,7 @@ class NewRequestModal extends Component {
 
   handleCreateItemRequest = () => { 
 
-    const itemArrayValue = this.refs.itemSelect.value.split('*');
-
-    const itemExist = this.state.itemsSelectedInTheRequest.find(item => item.item['itemName'] === itemArrayValue[2])
+    const itemExist = this.state.itemsSelectedInTheRequest.find(item => item.item['itemName'] === this.state.itemRequestedObject['itemName'])
 
     if (itemExist) {
        alert('This ITEM was SELECTED already!');
@@ -118,16 +119,14 @@ class NewRequestModal extends Component {
         {
           item: this.state.itemRequestedObject,
           itemIsAllowed: true,
-          qtyRequested: parseInt(this.refs.qtyInput.value),
-          qtyApproved: parseInt(this.refs.qtyInput.value),
-          qtyGiven: parseInt(this.refs.qtyInput.value),
+          qtyRequested: parseInt(this.state.qtyRequestedForUpdate, 10),
+          qtyApproved: parseInt(this.state.qtyRequestedForUpdate, 10),
+          qtyGiven: parseInt(this.state.qtyRequestedForUpdate, 10),
           qtyBalance: 0
         }
       );
-      this.refs.itemSelect.selectedIndex = 0;
-      this.refs.qtyInput.value = ''
-      this.validItemName = false;
-      this.validQtyRequested = false; 
+     
+      this.itemQtySelectInputFormComp.current.clearInputFields();
       this.setState({
         itemsSelectedInTheRequest: this.state.tempItemsSelectedInTheRequest,
         validEntries: false
@@ -181,8 +180,7 @@ class NewRequestModal extends Component {
               qtyRequestedForUpdate } = this.state;
             
       const contentBody = (
-      <div>
-        
+      <div>   
         <ItemQtySelectInputForm
             ref={this.itemQtySelectInputFormComp}
             itemsForRequest={this.state.itemsForRequest}
@@ -195,7 +193,7 @@ class NewRequestModal extends Component {
             handleSelectedItemQtyForUpdate={this.handleSelectedItemQtyForUpdate}
             handleSelectedItemForDeletion={this.handleSelectedItemForDeletion}
         />
-       </div>
+      </div>
      
     );
 
@@ -235,6 +233,7 @@ class NewRequestModal extends Component {
             contentFooter={contentFooter}
             title={title}
             modalIdName={'xRequestModal'}
+            isDisplayDate={false}
          />
          <YesNoConfirmModal 
             handleSaveNewRequest={this.handleSaveNewRequest}
