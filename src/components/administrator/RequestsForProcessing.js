@@ -11,6 +11,8 @@ class RequestsForProcessing extends Component {
         this.state = {
             arrayOfRequestForProcess: [],
             arrayOfRequestedItems: [],
+            officeName: '',
+            requestNo: '',
             xauthtoken: ''
         }
     }  
@@ -23,15 +25,18 @@ class RequestsForProcessing extends Component {
       
     }
 
-    handleStoreOfRequestedItems = (arrayOfRequestedItems) => {
+    handleStoreOfRequestedItemsAndOffice = (arrayOfRequestedItems, officeName, requestNo) => {
         this.setState({
-            arrayOfRequestedItems
+            arrayOfRequestedItems,
+            officeName,
+            requestNo
         })
     }
 
-    handleRequestSelected = (e) => {
+    handleRequestSelected = (request) => {
 
-        const requestNo = e.target.name;
+        const requestNo = request.requestNo;
+        const officeName = request.reqOffice; 
 
         let config = {
             headers: {
@@ -41,7 +46,7 @@ class RequestsForProcessing extends Component {
 
         axios.get(`http://localhost:7777/opstocks/api/request/no/${requestNo}`, config)
            .then((response) => {
-                 this.handleStoreOfRequestedItems(response.data['items']);
+                 this.handleStoreOfRequestedItemsAndOffice(response.data['items'], officeName, requestNo);
             })
             .catch((err) => {
                   alert('Something went wrong... ' + err);
@@ -50,13 +55,14 @@ class RequestsForProcessing extends Component {
     }
 
 
-    componentWillMount() {
+    componentDidMount() {
         const spear = this.props.location['state'];
         this.handleStoreArrayOfRequestAndToken(spear['arrow'], spear['shield']);
     }
 
 
     render() { 
+       
         return (
             <div>
                <UserNavBar
@@ -64,7 +70,10 @@ class RequestsForProcessing extends Component {
                />
 
                <ProcessRequestModal
-                    arrayOfRequestedItems={this.state.arrayOfRequestedItems}
+                  arrayOfRequestedItems={this.state.arrayOfRequestedItems}
+                  officeName={this.state.officeName}
+                  requestNo={this.state.requestNo}
+                  xauthtoken={this.state.xauthtoken}
                />
 
                <div className="container mt-5">
@@ -87,11 +96,16 @@ class RequestsForProcessing extends Component {
                              <td className="align-middle">
                                 <button 
                                    type="button"
-                                   name={request.requestNo}
                                    className="btn btn-link"
-                                   onClick={this.handleRequestSelected}
+                                   onClick={this.handleRequestSelected.bind(this,
+                                      {
+                                         requestNo: request.requestNo,
+                                         reqOffice: request.reqOffice            
+                                      }
+                                    )
+                                   }
                                    data-toggle="modal"
-                                   data-target="#xRequestModal"
+                                   data-target="#zRequestModal"
                                 > 
                                    {request.requestNo}
                                 </button>
@@ -101,7 +115,7 @@ class RequestsForProcessing extends Component {
                              </td>
                              <td className="align-middle">
                                {
-                                    new Date(request.date).toLocaleDateString("en-US")
+                                 new Date(request.date).toLocaleDateString("en-US")
                                }
                              </td>
                         </tr>

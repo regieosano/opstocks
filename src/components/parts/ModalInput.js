@@ -13,16 +13,18 @@ export class ModalInput extends Component {
     
     const modalInputShown =
      (this.props.modalName === 'Register') ?
-        <Register /> : <Login />; 
+        <Register /> :
+        <Login />; 
     
 
     return (
       <div>
         <div className="modal fade"
-           data-backdrop="static"
-           data-keyboard="false"
-           id="genericModal"
-           role="dialog"
+             data-backdrop="static"
+             data-keyboard="false"
+             ref="xLoginRegisterModal"
+             id="genericModal"
+             role="dialog"
            
         >
           <div className="modal-dialog" role="document">

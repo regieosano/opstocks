@@ -8,12 +8,18 @@ class ItemEditModal extends Component {
         super(props);
     }
 
-    handleEditedItem = () => {
-        const changedValue = this.refs.qtyApproved.value;
+    componentDidMount() {
+        this.refs.qtyEdited.focus();
+    }
+
+    handleEditedItem = () => { 
+        const changedValue = this.refs.qtyEdited.value;
+        this.refs.qtyEdited.value = '';
         this.props.handleQtyApprovedEdit(changedValue);
     }
 
-    render() {
+
+    render() { 
         return (
             <div>
              <div className="modal fade"
@@ -29,12 +35,13 @@ class ItemEditModal extends Component {
                      <div className="modal-body">
                          <form noValidate>
                              <div className="form-group">
-                                <label>{`Item #${this.props.itemNo}`}</label>
+                                <label>{`Item # ${this.props.itemNo}`}</label>
                                 <p>
                                    <font className="itemColor">
-                                      {this.props.selectedItem['itemName'] || "No Item Yet"} 
-                                   </font>
-                               
+                                      {
+                                        this.props.selectedItem.item['itemName']
+                                      } 
+                                   </font>               
                                 </p>
                              </div>
                              <div className="form-group">
@@ -42,19 +49,29 @@ class ItemEditModal extends Component {
                                 <input type="number" 
                                        className="form-control"
                                        ref="qtyRequested"
-                                       defaultValue={this.props.selectedItem['qtyRequested']}
+                                       disabled={true}
+                                       placeholder={this.props.selectedItem['qtyRequested']}
                                        
                                 />
                              </div>
                              <div className="form-group">
-                                 <label>Qty Approved</label>
+                             <label>Qty Approved</label>
+                             <input type="number" 
+                                    className="form-control"
+                                    ref="qtyApproved"
+                                    disabled={true}
+                                    placeholder={this.props.selectedItem['qtyApproved']}
+                                    
+                             />
+                            </div>
+                             <div className="form-group">
+                                 <label>Enter Corrected Approved Quantity</label>
                                  <input type="number" 
                                         className="form-control"
-                                        ref="qtyApproved"
-                                        defaultValue={this.props.selectedItem['qtyApproved']}
+                                        ref="qtyEdited"
+                                        placeholder={'Type new quantity'}
                                  />
                              </div>
-                            
                          </form> 
                      </div>
                      <div className="modal-footer">
@@ -63,7 +80,7 @@ class ItemEditModal extends Component {
                                 onClick={this.handleEditedItem}
                                 data-dismiss="modal"
                         >
-                                Save
+                                Ok
                         </button>
                         <button type="button"
                                 className="btn btn-secondary"                data-dismiss="modal">

@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import '../../styles/scss/Opening.scss';
 
-
-import WelcomeJumbotron from '../parts/WelcomeJumbotron';
+import WelcomeScreen from '../parts/WelcomeScreen';
 import TopNavBar from '../parts/TopNavBar';
 import { ModalInput } from '../parts/ModalInput';
+import MessageModal from '../parts/MessageModal';
 
 class Opening extends Component {
 
@@ -27,14 +27,16 @@ class Opening extends Component {
 
     render() {
         return (
-          <div>
+          <React.Fragment>
             <TopNavBar />
-    
+            <MessageModal />
+
             <ModalInput modalName={this.state.modalName}/>
     
-            <div className="container mt-5">
-              <WelcomeJumbotron />
+            <div className="container mt-3">
+              <WelcomeScreen />
             </div>
+
             <div className="access-buttons">
               <button type="button"
                   className="btn btn-primary register-opening"
@@ -46,17 +48,17 @@ class Opening extends Component {
                 Register
               </button>
               <button type="button"
-                    className="btn btn-primary ml-2 login-opening"
-                    name="Login"
-                    data-toggle="modal"
-                    onClick={this.handleClickRegisterLogin}
-                    data-target="#genericModal"
+                  className="btn btn-primary ml-2 login-opening"
+                  name="Login"
+                  data-toggle="modal"
+                  onClick={this.handleClickRegisterLogin}
+                  data-target="#genericModal"
               >
                 Login
               </button>
-           </div>
-           
-          </div>
+            </div>
+          
+          </React.Fragment>
         )
       }
 }

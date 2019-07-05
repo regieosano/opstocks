@@ -36,7 +36,7 @@ class NewRequestModal extends Component {
     }  
   }
  
-  componentWillMount(){ 
+  componentDidMount(){ 
     axios.get('http://localhost:7777/opstocks/api/items')
          .then(response => this.handleStoreForItemsForRequest(response.data))
          .catch(err => alert('Something went wrong... ' + err))
@@ -167,6 +167,8 @@ class NewRequestModal extends Component {
       itemsSelectedInTheRequest: [],
       isSavedCancelled: true,
       validEntries: false
+    }, () => {
+      // Todo a callback call after setState
     })
   }
 

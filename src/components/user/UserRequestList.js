@@ -76,9 +76,9 @@ class UserRequestList extends Component {
                            )
                          }
                      >
-                         <span className="text-right">
+                         <div className="text-right">
                             {item.qtyRequested}
-                         </span>
+                         </div>
                      </button>    
                   </td>
                   <td className="align-middle">{item.item['unit']}</td>

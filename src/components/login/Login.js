@@ -7,15 +7,16 @@ import '../../styles/scss/Login.scss';
 
 class Login extends Component {
 
+    modalLogin = true
+
     constructor(props) {
         super(props);
         this.state = {
             userEmail: '',
             userPassword: ''
-        }
+        }    
     }
     
-
     handleInputKey = (e) => {
         this.setState({
             [e.target.id]: e.target.value
@@ -29,6 +30,7 @@ class Login extends Component {
                  password: this.state.userPassword
                                   
         }).then((response) => {
+          
             let data = response.data;
 
             if (data['isAdmin']) {
@@ -36,6 +38,7 @@ class Login extends Component {
                     emerald: data
                 });
             } else {
+               
                 let config = {
                     headers: {
                       'x-auth-token': data['xauthtoken'],
@@ -55,7 +58,8 @@ class Login extends Component {
 
             
         }).catch((err) => {
-            alert('Invalid Username / Password')
+              alert('Invalid Username/Password Entered!')
+         
         })
       
     }
@@ -65,7 +69,7 @@ class Login extends Component {
         this.passwordUserInput.value = '';
     }
 
-    render() {
+    render() { 
 
         const login = (
             <form>
@@ -98,9 +102,10 @@ class Login extends Component {
              <div className="login-button">
                 <button type="button" 
                         className="btn btn-primary go-button"
+                        onClick={this.handleLogInUserNow}
                         data-toggle="modal"
                         data-target="#genericModal"
-                        onClick={this.handleLogInUserNow}
+                      
                 >
                     Proceed
                 </button>
@@ -115,12 +120,19 @@ class Login extends Component {
              </div>
             </form>
           )
-
+        
         return (
             <div>
-                { login }
+           
+             <div>
+               { login }
+             </div>
             </div>
-        );
+           
+        )
+          
+
+        
     }
 }
 
