@@ -33,7 +33,7 @@ class Opening extends Component {
 
             <ModalInput modalName={this.state.modalName}/>
     
-            <div className="container mt-3">
+            <div className="container mt-5">
               <WelcomeScreen />
             </div>
 

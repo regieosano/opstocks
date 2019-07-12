@@ -6,26 +6,41 @@ class ItemEditModal extends Component {
 
     constructor(props) {
         super(props);
+        this.state = {
+            isQtyEditedValValid: false
+        }
     }
 
-    componentDidMount() {
-        this.refs.qtyEdited.focus();
+    handleCancelEditItem = () => {
+        this.refs.qtyEdited.value = '';
+        this.setState({
+            isQtyEditedValValid: false
+        }) 
     }
 
     handleEditedItem = () => { 
-        const changedValue = this.refs.qtyEdited.value;
+        const changedValue = parseInt(this.refs.qtyEdited.value, 10);
         this.refs.qtyEdited.value = '';
         this.props.handleQtyApprovedEdit(changedValue);
     }
 
+    handleEntryInput = (e) => {
+        const qtyEditedValue = e.target.value;
+        const boolValue = (/^[1-9][0-9]*$/.test(qtyEditedValue))
+        this.setState({
+                isQtyEditedValValid: boolValue
+        })     
+    }
 
     render() { 
         return (
             <div>
              <div className="modal fade"
-                     tabIndex="-1"
-                     role="dialog"
-                     id="itemEditModal"
+                  tabIndex="-1"
+                  role="dialog"
+                  id="itemEditModal"
+                  data-backdrop="static"
+                  data-keyboard="false"
              >
                 <div className="modal-dialog">
                   <div className="modal-content modalBackdropForItemEdit">
@@ -41,12 +56,22 @@ class ItemEditModal extends Component {
                                       {
                                         this.props.selectedItem.item['itemName']
                                       } 
+                                   </font>
+                                   <br/>
+                                   <font className="stockFormat">
+                                    {
+                                       'Stock-On-Hand -' + ' ' + 
+                                       this.props.selectedItem.item['currentQty'] + ' ' +
+                                       this.props.selectedItem.item['unit']
+                                    }
                                    </font>               
                                 </p>
+                              
                              </div>
+                            
                              <div className="form-group">
                                 <label>Qty Requested</label>
-                                <input type="number" 
+                                <input type="text" 
                                        className="form-control"
                                        ref="qtyRequested"
                                        disabled={true}
@@ -55,21 +80,11 @@ class ItemEditModal extends Component {
                                 />
                              </div>
                              <div className="form-group">
-                             <label>Qty Approved</label>
-                             <input type="number" 
-                                    className="form-control"
-                                    ref="qtyApproved"
-                                    disabled={true}
-                                    placeholder={this.props.selectedItem['qtyApproved']}
-                                    
-                             />
-                            </div>
-                             <div className="form-group">
                                  <label>Enter Corrected Approved Quantity</label>
-                                 <input type="number" 
+                                 <input type="text" 
                                         className="form-control"
                                         ref="qtyEdited"
-                                        placeholder={'Type new quantity'}
+                                        onKeyUp={this.handleEntryInput}
                                  />
                              </div>
                          </form> 
@@ -78,12 +93,16 @@ class ItemEditModal extends Component {
                         <button type="button"
                                 className="btn btn-primary"
                                 onClick={this.handleEditedItem}
+                                disabled={!this.state.isQtyEditedValValid}
+                                placeholder={'Type new quantity'}
                                 data-dismiss="modal"
                         >
                                 Ok
                         </button>
                         <button type="button"
-                                className="btn btn-secondary"                data-dismiss="modal">
+                                className="btn btn-danger"                data-dismiss="modal"
+                                onClick={this.handleCancelEditItem}
+                        >
                                 Cancel
                         </button>
                      </div>

@@ -166,7 +166,12 @@ class ViewRequestModal extends Component {
                <th scope="col">Items</th>
                <th scope="col">Qty</th>
                <th scope="col"><i className="fa fa-th"></i></th> 
-               <th scope="col"><i className="fas fa-thumbs-up"></i></th>   
+               <th scope="col">
+               { 
+                 !this.props.isRequestSubmittedAlready ? 'Del' 
+                 : <i className="fas fa-thumbs-up"></i>
+               }
+               </th>   
              </tr>
           </thead>
           <tbody>

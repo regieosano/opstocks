@@ -1,7 +1,6 @@
 .table-wrap {
     height: 38rem;
     overflow-y: auto;
-
   
 }
 
@@ -17,4 +16,42 @@
 
 .table-fit {
     height: 1rem;
+}
+
+.qtyReqFormat {
+    font-weight: 600;
+}
+
+.unitFormat {
+    font-size: 13px;
+    color: #f58142;
+}
+
+.stockFormat {
+    font-size: 13px;
+    color: #1F5808;
+}
+
+.approvedFormat {
+    color: #0C05D8
+}
+
+.deleteFormat {
+    color: red;
+}
+
+.finishButton {
+  
+}
+
+.deleteFormat:hover {
+    cursor: pointer;
+}
+
+.undoFormat {
+    color: #000
+}
+
+.undoFormat:hover {
+    cursor: pointer;
 }

@@ -23,7 +23,17 @@ class RequestModal extends Component {
                        <div className="modal-content">
                           <div className="modal-header">               
                              <p className="modal-title titleFormat">
-                               {this.props.title + " "}
+                               {
+                                this.props.isDisplayRISNo ? 
+                                     <span>
+                                       {
+                                         this.props.title + " RIS No. " +
+                                         this.props.requestNo
+                                       }
+                                     </span>    
+                                     :   this.props.title + " " 
+                               
+                               }
                                {
                                    this.props.isDisplayDate ?
                                      <span className="datedFormat">
@@ -36,7 +46,7 @@ class RequestModal extends Component {
                            
                           </div>
                           <div className="modal-body">
-                               {this.props.contentBody} 
+                                {this.props.contentBody} 
                           </div>
                           <div className="modal-footer">
                                 {this.props.contentFooter}

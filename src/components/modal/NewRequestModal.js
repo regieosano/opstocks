@@ -121,6 +121,7 @@ class NewRequestModal extends Component {
           itemIsAllowed: true,
           qtyRequested: parseInt(this.state.qtyRequestedForUpdate, 10),
           qtyApproved: parseInt(this.state.qtyRequestedForUpdate, 10),
+          prevCurrentQty: this.state.itemRequestedObject['currentQty'],
           qtyGiven: parseInt(this.state.qtyRequestedForUpdate, 10),
           qtyBalance: 0
         }

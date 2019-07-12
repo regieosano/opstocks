@@ -74,6 +74,7 @@ export const addRequest = (officeName,
          requestNo: newRISNo,
          reqOffice: officeName,
          items: arrayOfItems,
+         wasInitiallyUpdated: false,
          isRequestSubmittedAlready,
          isRequestCompletedAndServed: false
     }, 

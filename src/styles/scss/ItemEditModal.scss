@@ -11,7 +11,6 @@
 .table-wrap {
     height: 38rem;
     overflow-y: auto;
-
   
 }
 
@@ -27,6 +26,15 @@
 
 .table-fit {
     height: 1rem;
+}
+
+.stockFormat {
+    font-size: 10px;
+}
+
+.strikeFormat {
+    text-decoration-line: line-through;
+    text-decoration-color: crimson;
 }
 
 

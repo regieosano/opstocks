@@ -99,9 +99,7 @@ class UserRequestList extends Component {
                   </td>
                 </tr>
              )
-            }
-          
-        
+            }  
             </tbody>
            </table>
           </div> 
@@ -110,8 +108,7 @@ class UserRequestList extends Component {
         return (
           <div>
             {requestedItems}          
-          </div>
-        
+          </div>    
           
         );
     }

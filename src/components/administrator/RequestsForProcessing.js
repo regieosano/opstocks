@@ -13,9 +13,16 @@ class RequestsForProcessing extends Component {
             arrayOfRequestedItems: [],
             officeName: '',
             requestNo: '',
+            wasInitiallyUpdated: false,
+            indexNo: 0,
             xauthtoken: ''
         }
-    }  
+    }
+    
+    componentDidMount() {
+      const spear = this.props.location['state'];
+      this.handleStoreArrayOfRequestAndToken(spear['arrow'], spear['shield']);
+    }
 
     handleStoreArrayOfRequestAndToken = (arrayOfRequestForProcess, xauthtoken) => {
         this.setState({
@@ -25,18 +32,22 @@ class RequestsForProcessing extends Component {
       
     }
 
-    handleStoreOfRequestedItemsAndOffice = (arrayOfRequestedItems, officeName, requestNo) => {
+    handleStoreOfRequestedItemsAndOffice = (arrayOfRequestedItems, officeName, requestNo, wasInitiallyUpdated, indexNo) => {
         this.setState({
             arrayOfRequestedItems,
             officeName,
-            requestNo
+            requestNo,
+            wasInitiallyUpdated,
+            indexNo
         })
     }
 
     handleRequestSelected = (request) => {
 
         const requestNo = request.requestNo;
-        const officeName = request.reqOffice; 
+        const officeName = request.reqOffice;
+        const wasInitiallyUpdated = request.wasInitiallyUpdated;
+        const indexNo = request.index;
 
         let config = {
             headers: {
@@ -46,23 +57,28 @@ class RequestsForProcessing extends Component {
 
         axios.get(`http://localhost:7777/opstocks/api/request/no/${requestNo}`, config)
            .then((response) => {
-                 this.handleStoreOfRequestedItemsAndOffice(response.data['items'], officeName, requestNo);
+                 this.handleStoreOfRequestedItemsAndOffice(response.data['items'], officeName, requestNo, wasInitiallyUpdated, indexNo);
             })
             .catch((err) => {
                   alert('Something went wrong... ' + err);
             })
-
     }
 
+    
 
-    componentDidMount() {
-        const spear = this.props.location['state'];
-        this.handleStoreArrayOfRequestAndToken(spear['arrow'], spear['shield']);
+    setWasInitiallyUpdatedToTrue = () => {
+       this.state.arrayOfRequestForProcess[this.state.indexNo].wasInitiallyUpdated = true;
+       this.setState({ wasInitiallyUpdated: true })
     }
-
-
+    
     render() { 
        
+        const { arrayOfRequestedItems, 
+                officeName,
+                requestNo,
+                wasInitiallyUpdated,
+                xauthtoken } = this.state; 
+
         return (
             <div>
                <UserNavBar
@@ -70,10 +86,12 @@ class RequestsForProcessing extends Component {
                />
 
                <ProcessRequestModal
-                  arrayOfRequestedItems={this.state.arrayOfRequestedItems}
-                  officeName={this.state.officeName}
-                  requestNo={this.state.requestNo}
-                  xauthtoken={this.state.xauthtoken}
+                  arrayOfRequestedItems={arrayOfRequestedItems}
+                  officeName={officeName}
+                  requestNo={requestNo}
+                  wasInitiallyUpdated={wasInitiallyUpdated}
+                  setWasInitiallyUpdatedToTrue={this.setWasInitiallyUpdatedToTrue}
+                  xauthtoken={xauthtoken}
                />
 
                <div className="container mt-5">
@@ -99,8 +117,9 @@ class RequestsForProcessing extends Component {
                                    className="btn btn-link"
                                    onClick={this.handleRequestSelected.bind(this,
                                       {
+                                         index,
                                          requestNo: request.requestNo,
-                                         reqOffice: request.reqOffice            
+                                         reqOffice: request.reqOffice,   wasInitiallyUpdated: request.wasInitiallyUpdated        
                                       }
                                     )
                                    }
