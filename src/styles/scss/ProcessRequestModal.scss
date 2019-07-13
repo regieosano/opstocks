@@ -32,16 +32,17 @@
     color: #1F5808;
 }
 
+.strikeFormat {
+    text-decoration-line: line-through;
+    text-decoration-color: crimson;
+}
+
 .approvedFormat {
     color: #0C05D8
 }
 
 .deleteFormat {
     color: red;
-}
-
-.finishButton {
-  
 }
 
 .deleteFormat:hover {

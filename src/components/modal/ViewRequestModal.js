@@ -179,7 +179,8 @@ class ViewRequestModal extends Component {
             this.props.requestedItems.map((item, index) => 
               <tr className="col-12 changeAlignment" key={index}> 
                 <th scope="row"  className="align-middle">{index+1}.</th>
-                <td className="align-middle">
+                <td className={item.itemIsAllowed ?
+                  "align-middle": "align-middle strikeFormat"}>
                     {item.item['itemName']}
                 </td>
                 <td className="align-middle"> 

@@ -130,7 +130,7 @@ class ProcessRequestModal extends Component {
 
     handleCloseOfProcessRequestModal = () => {
         if (this.state.hasForUpdate || (!this.props.wasInitiallyUpdated)) {
-            alert('There are CHANGES made, UPDATE is needed. Click on the DB Update next time.')
+            alert('There are CHANGES made, UPDATE is needed. All will be DISCARDED.')
         }
         this.setState({
             hasForUpdate: false,

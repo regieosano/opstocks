@@ -47,47 +47,67 @@ class ItemEditModal extends Component {
                      <div className="modal-header">
                        <h5 className="modal-title">Edit</h5>
                      </div>
-                     <div className="modal-body">
-                         <form noValidate>
-                             <div className="form-group">
-                                <label>{`Item # ${this.props.itemNo}`}</label>
-                                <p>
-                                   <font className="itemColor">
-                                      {
-                                        this.props.selectedItem.item['itemName']
-                                      } 
-                                   </font>
-                                   <br/>
-                                   <font className="stockFormat">
-                                    {
-                                       'Stock-On-Hand -' + ' ' + 
-                                       this.props.selectedItem.item['currentQty'] + ' ' +
-                                       this.props.selectedItem.item['unit']
-                                    }
-                                   </font>               
-                                </p>
-                              
-                             </div>
-                            
-                             <div className="form-group">
-                                <label>Qty Requested</label>
-                                <input type="text" 
-                                       className="form-control"
-                                       ref="qtyRequested"
-                                       disabled={true}
-                                       placeholder={this.props.selectedItem['qtyRequested']}
-                                       
-                                />
-                             </div>
-                             <div className="form-group">
-                                 <label>Enter Corrected Approved Quantity</label>
-                                 <input type="text" 
-                                        className="form-control"
-                                        ref="qtyEdited"
-                                        onKeyUp={this.handleEntryInput}
-                                 />
-                             </div>
-                         </form> 
+                     <div className="modal-body">   
+                        <div className="container-fluid">
+                           <form noValidate>
+                              <div className="row">
+                                 <div className="col">
+                                   <div className="form-group">
+                                      <label>
+                                         {`Item # ${this.props.itemNo}`}
+                                      </label>
+                                      <p>
+                                         <font className="itemColor">
+                                           {
+                                              this.props.selectedItem.item['itemName']
+                                           } 
+                                         </font>
+                                         <br/>
+                                         <font className="stockFormat">
+                                           {
+                                              'Stock-On-Hand -' + ' ' + 
+                                               this.props.selectedItem.item['currentQty'] + ' ' +
+                                               this.props.selectedItem.item['unit']
+                                           }
+                                         </font>               
+                                      </p>
+                                    </div>
+                                  </div>
+                               </div>
+                               <div className="row">
+                                  <div className="col">
+                                    <div className="form-group">
+                                       <label>Qty Requested</label>
+                                       <input type="text" 
+                                              className="form-control"
+                                              ref="qtyRequested"
+                                              disabled={true}
+                                              placeholder={this.props.selectedItem['qtyRequested']}             
+                                       />
+                                    </div>
+                                  </div>
+                                  <div className="col">
+                                    <div className="form-group">
+                                       <label>Qty Approved</label>
+                                       <input type="text" 
+                                              className="form-control"
+                                              ref="qtyApproved"
+                                              disabled={true}
+                                              placeholder={this.props.selectedItem['qtyApproved']}
+                                       />
+                                    </div>
+                                  </div>
+                               </div>
+                               <div className="form-group">
+                                  <label>Enter Corrected Approved Quantity</label>
+                                  <input type="text" 
+                                         className="form-control"
+                                         ref="qtyEdited"
+                                         onKeyUp={this.handleEntryInput}
+                                  />
+                               </div>
+                            </form>
+                        </div>
                      </div>
                      <div className="modal-footer">
                         <button type="button"
